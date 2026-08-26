@@ -1,0 +1,50 @@
+name: Autograding C++ Test
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  grade-assignment:
+    name: Evaluasi Tugas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Kode
+        uses: actions/checkout@v4
+
+      - name: Kompilasi Program
+        run: |
+          g++ -std=c++17 -Wall main.cpp -o solution
+
+      - name: Test Case 1 (Angka 7 -> Prima)
+        id: test-1
+        uses: education/autograding-io-grader@v1
+        with:
+          test-name: "Test 1: Input 7"
+          command: "./solution"
+          input: "7"
+          expected-output: "PRIMA"
+          comparison-method: "exact"
+          timeout: 2
+          max-score: 50
+
+      - name: Test Case 2 (Angka 10 -> BUKAN PRIMA)
+        id: test-2
+        uses: education/autograding-io-grader@v1
+        with:
+          test-name: "Test 2: Input 10"
+          command: "./solution"
+          input: "10"
+          expected-output: "BUKAN PRIMA"
+          comparison-method: "exact"
+          timeout: 2
+          max-score: 50
+
+      - name: Laporan Nilai Akhir
+        uses: education/autograding-grading-reporter@v1
+        if: always()
+        env:
+          TEST-1_RESULTS: "${{steps.test-1.outputs.result}}"
+          TEST-2_RESULTS: "${{steps.test-2.outputs.result}}"
+        with:
+          runners: test-1,test-2
