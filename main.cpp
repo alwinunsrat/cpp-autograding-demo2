@@ -2,22 +2,13 @@
 
 using namespace std;
 
-bool isPrime(int n) {
-    if (n <= 1) return false;
-    for (int i = 2; i * i <= n; ++i) {
-        if (n % i == 0) return false;
-    }
-    return true;
-}
-
 int main() {
     int n;
-    if (cin >> n) {
-        if (isPrime(n)) {
-            cout << "PRIMA" << endl;
-        } else {
-            cout << "BUKAN PRIMA" << endl;
-        }
-    }
+    if (!(cin >> n)) return 0;
+
+    // TODO: Lengkapi logika pengecekan bilangan prima
+    // Cetak "PRIMA" jika prima, atau "BUKAN PRIMA" jika bukan.
+    cout << "BELUM DIKERJAKAN" << endl;
+
     return 0;
 }
